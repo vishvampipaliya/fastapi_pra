@@ -47,6 +47,8 @@ Server will run at:
 - GET /patients/{patient_id} : get one patient by id
 - GET /sorted_patients?sort_by=age&sort_order=asc : sorted patient list
 - POST /create_patient : create a new patient
+- PUT /update_patient/{patient_id} : update an existing patient
+- DELETE /delete_patient/{patient_id} : delete a patient
 
 ## Example Create Request
 
@@ -59,8 +61,28 @@ Server will run at:
   "condition": "Flu",
   "weight": 72,
   "height": 178
+  "bmi":27.5
 }
 ```
+
+## Example Update Request
+
+```json
+{
+  "name": "Updated User",
+  "age": 34,
+  "condition": "Recovered",
+  "weight": 73,
+  "height": 179
+}
+```
+
+## Response Notes
+
+- Patient records are stored in patients.json in the project root.
+- BMI is computed automatically from weight and height.
+- Update requests can send only the fields you want to change.
+- Gender must be exactly Male or Female.
 
 ## Troubleshooting
 
@@ -114,13 +136,18 @@ Server will run at:
 - Ensure gender value is exactly Male or Female.
 - Ensure age, weight, and height are positive values.
 
-### 5) Data not saved or patient not found
+### 5) 404 Not Found on GET, PUT, or DELETE
+
+- Verify the patient ID exists in patients.json.
+- Use the exact ID format stored in the file, such as p001.
+
+### 6) Data not saved or patient not found
 
 - Confirm patients.json exists in the project root.
 - Confirm server is started from the same folder where main.py and patients.json are located.
 - If JSON file is malformed, fix it to valid JSON format and restart server.
 
-### 6) Virtual environment activation issues (PowerShell)
+### 7) Virtual environment activation issues (PowerShell)
 
 - Activate environment:
 
